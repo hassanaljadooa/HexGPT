@@ -19,6 +19,8 @@
         if (req.status == 200) {
             // extracts JSON from GPT response, then sets it to color variable
             colors = utils.extractColorArray(res);
+
+            utils.successMessage(`${colors.length} Color pallet created successfully`)
         }
     }
 
@@ -34,12 +36,12 @@
             <textarea
                     bind:value={prompt}
                     rows="4"
-                    class="resize-none w-full p-2 border border-gray-300 rounded-lg focus:border-blue-400 focus:outline-none"
+                    class="textarea textarea-bordered w-full"
                     placeholder="A color pallet with a cyberpunk theme, 20 colors, close shades..."
-            />
+            ></textarea>
             <button
                     on:click={generate}
-                    class=" w-full bg-zinc-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md transform transition-transform duration-200 hover:bg-lightBlue-600 active:scale-95 focus:outline-none focus:ring-4 focus:ring-2 focus:ring-opacity-50"
+                    class="btn w-full"
             >
                 Create Pallet
             </button>
@@ -51,7 +53,7 @@
             >{colors.length}</span
             >
             </h2>
-            <div class="grid grid-cols-2 gap-2">
+            <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-2">
                 {#each colors as { hex, name }}
                     <div
                             class="flex flex-col items-center justify-center bg-white rounded-lg shadow p-2 focus:outline-none focus:"
@@ -86,9 +88,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .min-h-screen {
-        min-height: 100vh;
-    }
-</style>
