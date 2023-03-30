@@ -18,6 +18,6 @@ export async function generate_pallet(prompt) {
     });
 
     const res = await api.sendMessage(prompt);
-    console.log(res.text)
+    //console.log(res.text)
     return res.text;
 }

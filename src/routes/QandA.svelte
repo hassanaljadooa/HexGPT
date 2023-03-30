@@ -23,21 +23,36 @@
     ];
 </script>
 
-<div class="flex items-center justify-center w-full">
-    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-6xl space-y-4">
-        <div class="text-center">
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">Qustions & Answers</h1>
-        </div>
-
-        {#each qa as i}
-            <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box">
-                <div class="collapse-title text-xl font-medium">
-                    {i.question}
+<div class="min-h-screen flex flex-col justify-center">
+    <div class="relative w-full">
+        <div class="bg-white shadow-xl rounded-lg md:p-10 sm:p-10">
+            <div class="w-full">
+                <div class="text-center">
+                    <h1 class="text-3xl font-semibold text-gray-800">Q&A Section</h1>
                 </div>
-                <div class="collapse-content">
-                    <p>{@html atob(i.answer)}</p>
+                <div class="mt-8">
+                    {#each qa as { question, answer }}
+                        <div class="accordion accordion-arrow mb-2" open="">
+                            <div class="accordion-header bg-gray-200 rounded-t-2xl p-4">
+                                <div class="flex-1">
+                                    <h2 class="text-xl font-medium text-gray-800 text-center">{question}</h2>
+                                </div>
+                                <div class="accordion-icon">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </div>
+                            <div class="accordion-body bg-gray-100 p-4 rounded-b-2xl">
+                                <p class="text-gray-600">{@html atob(answer)}</p>
+                            </div>
+                        </div>
+                    {/each}
                 </div>
             </div>
-        {/each}
+        </div>
     </div>
 </div>
+
+
+
+
+

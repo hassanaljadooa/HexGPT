@@ -1,7 +1,7 @@
 import { SvelteToast, toast } from '@zerodevx/svelte-toast'
 
 
-let successMessage = function (message) {
+let successMessage = function (message, duration) {
     const toasts = new SvelteToast({
         target: document.body
     })
@@ -10,17 +10,30 @@ let successMessage = function (message) {
             '--toastColor': 'mintcream',
             '--toastBackground': 'rgba(72,187,120,0.9)',
             '--toastBarBackground': '#2F855A'
-        }
+        },
+        duration: 2000
     })
 }
-
+let failMessage = function (message, duration) {
+    const toasts = new SvelteToast({
+        target: document.body
+    })
+    toast.push(message, {
+        theme: {
+            '--toastColor': 'mintcream',
+            '--toastBackground': 'rgb(218, 148, 19)',
+            '--toastBarBackground': '#da9413'
+        },
+        duration: 2000
+    })
+}
 function copyToClipboard(data) {
     navigator.clipboard.writeText(data).then(
         () => {
             //console.log(`Copied ${data} to clipboard`);
             //message.success(`Copied ${data} to clipboard.`)
 
-            successMessage(`Copied ${data} to clipboard`)
+            successMessage(`Copied ${data} to clipboard`, 1000)
         },
         (err) => {
             console.error('Could not copy text: ', err);
@@ -75,14 +88,15 @@ function hexToHSL(hex) {
 }
 
 // extracts JSON data from ChatGPT response
-// not fool proof
 function extractColorArray(jsonString) {
     const jsonStart = jsonString.indexOf('[');
     const jsonEnd = jsonString.lastIndexOf(']') + 1;
     const extractedJsonString = jsonString.slice(jsonStart, jsonEnd);
-    const colorArray = JSON.parse(extractedJsonString);
-
-    return colorArray;
+    try {
+        return JSON.parse(extractedJsonString);
+    } catch (error) {
+        return false
+    }
 }
 
-export default {successMessage, copyToClipboard, hexToHSL, hexToRGBA, extractColorArray}
+export default {successMessage, failMessage, copyToClipboard, hexToHSL, hexToRGBA, extractColorArray}
