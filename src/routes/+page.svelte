@@ -1,5 +1,5 @@
 <script>
-	import ColorPanel from "./ColorPanel.svelte";
+	import ColorPanel from './ColorPanel.svelte';
 	import QandA from './QandA.svelte';
 </script>
 

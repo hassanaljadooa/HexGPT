@@ -1,5 +1,5 @@
 {
-	"name": "HexGPT",
+	"name": "hexgpt",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
@@ -40,6 +40,7 @@
 	"dependencies": {
 		"bootstrap-icons": "^1.10.3",
 		"chatgpt": "^5.1.2",
-		"daisyui": "^2.51.5"
+		"daisyui": "^2.51.5",
+		"html2canvas": "^1.4.1"
 	}
 }

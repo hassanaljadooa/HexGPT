@@ -12,7 +12,7 @@
 			<p>
 				HexGPT is a purpose-built free and open source user interface created by <a
 					href="https://twitter.com/aljahooda">Hassan</a
-			> to streamline the process of generating color pallets through OpenAI's artificial intelligence
+				> to streamline the process of generating color pallets through OpenAI's artificial intelligence
 				model, GPT-3.5-Turbo, also known as the ChatGPT API.
 			</p>
 			<br />
