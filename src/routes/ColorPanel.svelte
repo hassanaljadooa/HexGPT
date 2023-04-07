@@ -79,7 +79,6 @@
 	<div class="alert-content pt-2">
 		<span>ChatGPT API can struggle when a prompt is overtly specific, if you see a <span class="font-bold italic">Pallet generation has failed</span> error message please don't hesitate to try again, even slight variations in a prompt can a make a big difference.
 			I am currently working on a more robust system prompt, to make sure that the ChatGPT API is reliable and flexible.
-			In the Mean time feel free to use the API Query Settings to fine-tune the GPT parameters.
 			<br><br>
 			Also, HexGPT now generates 4 distinct colors pallets based on the same prompt, you can cycle through them all with the tooltip located at the bottom of the screen.
 		</span>
