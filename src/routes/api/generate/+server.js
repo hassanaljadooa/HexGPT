@@ -9,5 +9,7 @@ export async function GET({ url }) {
 
 	let res = await generate_pallet(prompt);
 
-	return new Response(String(res));
+	//console.log(res)
+
+	return new Response(JSON.stringify(res));
 }

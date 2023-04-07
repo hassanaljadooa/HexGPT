@@ -15,10 +15,16 @@ export async function generate_pallet(prompt) {
 
 	const api = new ChatGPTAPI({
 		apiKey: process.env.OPENAI_API_KEY,
-		systemMessage: systemMessage
+		systemMessage: systemMessage,
+		completionParams: {
+			temperature: .4,
+			n: 4 // number of generations to make per prompt 1 prompt = 4 unique generations
+		}
 	});
 
 	const res = await api.sendMessage(prompt);
+
+	console.log(res)
 	//console.log(res.text)
-	return res.text;
+	return res;
 }

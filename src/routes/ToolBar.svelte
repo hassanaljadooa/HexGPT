@@ -2,7 +2,15 @@
 	import utils from "$lib/utils.js";
 	import html2canvas from 'html2canvas';
 
+	import {choices} from "$lib/stores.js";
+
 	let screenshotUrl;
+
+	let numOfPallets = 0
+
+	choices.subscribe(choices => {
+		numOfPallets = choices.length
+	})
 
 	async function captureScreenshot() {
 		let colorPanel = document.getElementById('color-panel');
@@ -12,7 +20,7 @@
 		colorPanel.style.padding = 5;
 
 		let canvas = await html2canvas(colorPanel, {
-			scale: 2
+			scale: 4
 		});
 
 		screenshotUrl = canvas.toDataURL();
@@ -25,7 +33,9 @@
 	<div class="navbar rounded-lg bg-base-100">
 		<div class="flex flex-col sm:flex-row justify-between w-full">
 			<div class="text-center sm:text-left mb-4 sm:mb-0">
-				<button class="btn btn-ghost hover:backdrop-grayscale-0 normal-case text-xl">Pallet Options</button>
+				<button class="btn btn-ghost hover:backdrop-grayscale-0 normal-case text-xl">
+					Pallet &nbsp; <div class="badge badge-xl">{numOfPallets}</div>
+				</button>
 			</div>
 			<div class="flex-none">
 				<ul class="menu flex flex-col sm:flex-row menu-horizontal px-1">

@@ -102,6 +102,7 @@ function extractColorArray(jsonString) {
 	try {
 		return JSON.parse(extractedJsonString);
 	} catch (error) {
+		console.log(error)
 		return false;
 	}
 }

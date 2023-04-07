@@ -13,9 +13,6 @@
 		<div class="my-2">
 			<ColorPanel />
 		</div>
-		<div class="my-2">
-			<QandA />
-		</div>
 	</div>
 </section>
 
