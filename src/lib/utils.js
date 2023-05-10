@@ -1,4 +1,5 @@
 import { SvelteToast, toast } from '@zerodevx/svelte-toast';
+import {currentSelectionIdx} from "$lib/stores.js";
 
 let successMessage = function (message, duration) {
 	const toasts = new SvelteToast({
@@ -40,7 +41,7 @@ function actuateModal(elemId) {
 function copyToClipboard(data) {
 	navigator.clipboard.writeText(data).then(
 		() => {
-			successMessage(`Copied ${data} to clipboard`, 1000);
+			successMessage(`Copied ${typeof data === 'object' ? JSON.stringify(data) : data} to clipboard`, 1000);
 		},
 		(err) => {
 			console.error('Could not copy text: ', err);
@@ -95,17 +96,40 @@ function hexToHSL(hex) {
 }
 
 // extracts JSON data from ChatGPT response
-function extractColorArray(jsonString) {
-	const jsonStart = jsonString.indexOf('[');
-	const jsonEnd = jsonString.lastIndexOf(']') + 1;
-	const extractedJsonString = jsonString.slice(jsonStart, jsonEnd);
+/*function extractColorArray(jsonString) {
+	// Remove newlines and whitespace
+	const sanitizedJsonString = jsonString.replace(/[\n\r\s]+/g, '');
+
+	// Find the start and end of the JSON object
+	const jsonStart = sanitizedJsonString.indexOf('[');
+	const jsonEnd = sanitizedJsonString.lastIndexOf(']') + 1;
+
+	// Extract the JSON object
+	//const extractedJsonString = sanitizedJsonString.slice(jsonStart, jsonEnd);
+
 	try {
-		return JSON.parse(extractedJsonString);
+		// Parse the JSON object
+		const colors = JSON.parse(sanitizedJsonString);
+		return colors;
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 		return false;
 	}
+}*/
+
+function extractColorArray(inputString) {
+	// Extract JSON array from the input string using a regular expression
+	const jsonArrayStr = inputString.match(/\[([^\]]*)\]/g) || [];
+
+	if (jsonArrayStr !== null) {
+		// Parse JSON array string to an array
+		const jsonArray = JSON.parse(jsonArrayStr[0]);
+		console.log(jsonArray)
+
+		return jsonArray;
+	}
 }
+
 
 export default {
 	successMessage,

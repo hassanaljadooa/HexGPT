@@ -1,16 +1,37 @@
 <script>
-	import utils from "$lib/utils.js";
+	import utils from '$lib/utils.js';
 	import html2canvas from 'html2canvas';
 
-	import {choices} from "$lib/stores.js";
+	import { choices, currentSelectionIdx } from '$lib/stores.js';
+	import {onMount} from "svelte";
 
 	let screenshotUrl;
 
-	let numOfPallets = 0
+	let numOfPallets = 0;
+	let colorChoices = []
 
-	choices.subscribe(choices => {
-		numOfPallets = choices.length
+	let currentChoice;
+
+	onMount(() => {
+		choices.subscribe((choices) => {
+			console.log(colorChoices)
+			numOfPallets = choices.length;
+			colorChoices = choices
+		});
+
+		currentChoice = colorChoices[0]
 	})
+
+	$: if ($currentSelectionIdx) {
+		currentChoice = colorChoices[$currentSelectionIdx]
+	}
+
+	function exportAsJson (exportType) {
+		if (exportType === "clipboard") {
+			utils.copyToClipboard(JSON.stringify(currentChoice))
+		}
+		if (exportType == 'file') {return null}
+	}
 
 	async function captureScreenshot() {
 		let colorPanel = document.getElementById('color-panel');
@@ -25,7 +46,7 @@
 
 		screenshotUrl = canvas.toDataURL();
 
-		utils.actuateModal('sc')
+		utils.actuateModal('sc');
 	}
 </script>
 
@@ -34,31 +55,44 @@
 		<div class="flex flex-col sm:flex-row justify-between w-full">
 			<div class="text-center sm:text-left mb-4 sm:mb-0">
 				<button class="btn btn-ghost hover:backdrop-grayscale-0 normal-case text-xl">
-					Pallet &nbsp; <div class="badge badge-xl">{numOfPallets}</div>
+					Pallet &nbsp; <div class="badge badge-xl">{colorChoices.length}</div>
 				</button>
 			</div>
 			<div class="flex-none">
 				<ul class="menu flex flex-col sm:flex-row menu-horizontal px-1">
-					<li class="mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
-						<button class="btn btn-ghost w-full sm:w-auto text-center" on:click={captureScreenshot}>Save Pallet</button>
-					</li>
-					<li class="w-full sm:w-auto">
-						<button class="btn btn-ghost w-full sm:w-auto text-center">Fine Tune (coming soon)</button>
-					</li>
+					<div class="dropdown dropdown-end mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+						<label tabindex="0" class="btn btn-ghost rounded-btn swap">
+							<input type="checkbox" />
+							<div class="swap-on"><i class="fa-solid fa-caret-right fa-lg fa-rotate-90"></i>&nbsp;Export Pallet</div>
+							<div class="swap-off"><i class="fa-solid fa-caret-right fa-lg"></i>&nbsp;Export Pallet</div>
+						</label>
+						<ul tabindex="0" class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-full mt-4">
+							<li>
+								<button class="btn btn-ghost w-full text-center" on:click={captureScreenshot}
+								>Image</button
+								></li>
+							<li>
+								<button class="btn btn-ghost w-full text-center" on:click={() => {utils.actuateModal('cm')}}
+								>JSON</button>
+							</li>
+						</ul>
+					</div>
 				</ul>
 			</div>
 		</div>
 	</div>
 </div>
 
-
-
-
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="screenshotModal" class="modal-toggle" />
 <div class="modal modal-bottom sm:modal-middle" id="sc">
 	<div class="modal-box">
-		<h3 class="font-bold text-xl text-center mb-1">Screenshot Preview</h3>
+		<div class="flex justify-between mb-1">
+			<h3 class="font-bold text-xl text-center mb-1">Preview Image</h3>
+			<button class="btn btn-ghost btn-circle btn-sm text-xl" on:click={() => {utils.actuateModal("sc")}}><i class="fa-solid fa-circle-xmark"></i></button>
+		</div>
+		p.
+		<div class="divider"></div>
 		<img src={screenshotUrl} class="" alt="An Image of the Color Pallete" />
 		<div class="modal-action">
 			<a
@@ -68,9 +102,38 @@
 				class="btn"
 				on:click={() => {
 					//screenshotUrl = undefined;
-					utils.actuateModal('sc')
-					utils.successMessage('Saved pallet successfully.', 1500)
-				}}>Save</a>
+					utils.actuateModal('sc');
+					utils.successMessage('Saved pallet successfully.', 1500);
+				}}><i class="fa-solid fa-download"></i>&nbsp;Save Image</a
+			>
 		</div>
 	</div>
 </div>
+
+{#if typeof currentChoice != 'undefined'}
+	<input type="checkbox" id="codeModal" class="modal-toggle" />
+	<div class="modal modal-bottom sm:modal-middle" id="cm">
+		<div class="modal-box">
+			<div class="flex justify-between mb-1">
+				<h3 class="font-bold text-xl text-center mb-1">JSON Preview</h3>
+				<button class="btn btn-ghost btn-circle btn-sm text-xl" on:click={() => {utils.actuateModal("cm")}}><i class="fa-solid fa-circle-xmark"></i></button>
+			</div>
+			<div class="divider"></div>
+			<div class="mockup-code">
+				{#each currentChoice as color, idx}
+					<pre class="text-success bg-transparent	shadow-transparent" data-prefix="{idx + 1}"><code>{JSON.stringify(color)}</code></pre>
+				{/each}
+			</div>
+			<div class="modal-action">
+				<button on:click={() => {
+					exportAsJson('clipboard')
+					utils.actuateModal('cm')
+				}} class="btn btn-primary"><i class="fa-solid fa-copy"></i> &nbsp; Copy to Clipboard</button>
+				<button on:click={() => {
+					exportAsJson('file')
+				utils.actuateModal('cm')
+				}} class="btn btn-secondary"><i class="fa-solid fa-download"></i>&nbsp;Save as JSON File</button>
+			</div>
+		</div>
+	</div>
+{/if}

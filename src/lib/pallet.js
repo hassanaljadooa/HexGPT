@@ -1,30 +1,23 @@
 import { ChatGPTAPI } from 'chatgpt';
 
-export async function generate_pallet(prompt) {
-	let systemMessage =
-		'You are a color pallet generator, that is your only function. \n' +
-		'You will be given a prompt that will specify the requirements for a color pallet to be generated as well as the number of colors the pallet must include, the minimum number of colors in the pallet is 2. The pallet must be a JSON array, where each object in the array is an individual color of the overall pallet. This is an example of the response you are expected to generate -- \n' +
-		'[\n' +
-		"        { hex: '#EF4444', name: 'red-500' },\n" +
-		"        { hex: '#F59E0B', name: 'yellow-500' },\n" +
-		"        { hex: '#10B981', name: 'green-500' },\n" +
-		"        { hex: '#3B82F6', name: 'blue-500' },\n" +
-		"        { hex: '#9333EA', name: 'indigo-500' },\n" +
-		"        { hex: '#EC4899', name: 'pink-500' }\n" +
-		"] The color must be in a HEX format, the property in the object must be named 'hex'. The object must also include the english name of the color, the property in the object must be named 'name'. ";
+export async function generate_pallet(reqParams) {
+	let basePrompt = `Generate an RGB color palette based on this given text description (single sentence, paragraph, or list of keywords) and output a JSON array. 
+	Each object in the array represents a single color, containing 'hex' and 'name'.
+	The number of colors can vary, the color names should accurately represent the colors. here's the text description: DESC_PLACEHOLDER`
 
 	const api = new ChatGPTAPI({
 		apiKey: process.env.OPENAI_API_KEY,
-		systemMessage: systemMessage,
 		completionParams: {
-			temperature: .4,
-			n: 4 // number of generations to make per prompt 1 prompt = 4 unique generations
+			temperature: 0.40,
+			//top_p: reqParams.top_p,
+			n: reqParams.generationCount // number of generations to make per prompt 1 prompt = 4 unique generations
 		}
 	});
 
-	const res = await api.sendMessage(prompt);
-
+	const res = await api.sendMessage(basePrompt.replace('DESC_PLACEHOLDER', reqParams.prompt));
+ 
+	console.log(basePrompt.replace('DESC_PLACEHOLDER', reqParams.prompt))
 	console.log(res)
-	//console.log(res.text)
+
 	return res;
 }

@@ -25,8 +25,8 @@
 </script>
 
 <div class="min-h-screen flex flex-col justify-center">
-	<div class="relative w-full">
-		<div class="bg-white shadow-xl rounded-lg md:p-10 sm:p-10">
+	<div class="w-full">
+		<div class="bg-white shadow-xl rounded-lg p-10">
 			<div class="w-full">
 				<div class="text-center">
 					<h1 class="text-3xl font-semibold text-gray-800">Q&A Section</h1>
@@ -38,11 +38,8 @@
 								<div class="flex-1">
 									<h2 class="text-xl font-medium text-gray-800 text-center">{question}</h2>
 								</div>
-								<div class="accordion-icon">
-									<i class="fas fa-angle-down" />
-								</div>
 							</div>
-							<div class="accordion-body bg-gray-100 p-4 rounded-b-2xl">
+							<div class="accordion-body bg-gray-100 p-2 rounded-b-lg">
 								<p class="text-gray-600">{@html atob(answer)}</p>
 							</div>
 						</div>
