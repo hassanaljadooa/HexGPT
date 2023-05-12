@@ -16,8 +16,7 @@
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@playwright/test": "^1.28.1",
-		"@sveltejs/adapter-cloudflare": "^2.2.2",
-		"@sveltejs/adapter-vercel": "^1.0.0",
+		"@sveltejs/adapter-cloudflare": "^1.0.0",
 		"@sveltejs/kit": "^1.0.0",
 		"@types/cookie": "^0.5.1",
 		"@zerodevx/svelte-toast": "^0.9.3",
@@ -39,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-netlify": "^2.0.7",
 		"bootstrap-icons": "^1.10.3",
 		"chatgpt": "^5.1.2",
 		"daisyui": "^2.51.5",
