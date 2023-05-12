@@ -19,7 +19,7 @@
 
 		let colors = [];
 
-		if (req.status == 400) {
+		if (req.status == 200) {
 			res.detail.choices.forEach((choice) => {
 				// extracts JSON from GPT response, then sets it to color variable
 				let extractedJson = utils.extractColorArray(choice.message.content); //JSON.parse(choice.message.content)
