@@ -51,37 +51,35 @@
 </script>
 
 <div class="mb-2">
-	<div class="navbar rounded-lg bg-base-100">
-		<div class="flex flex-col sm:flex-row justify-between w-full">
-			<div class="text-center sm:text-left mb-4 sm:mb-0">
-				<button class="btn btn-ghost hover:backdrop-grayscale-0 normal-case text-xl">
-					Pallet &nbsp; <div class="badge badge-xl">{colorChoices.length}</div>
-				</button>
-			</div>
-			<div class="flex-none">
-				<ul class="menu flex flex-col sm:flex-row menu-horizontal px-1">
-					<div class="dropdown dropdown-end mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
-						<label tabindex="0" class="btn btn-ghost rounded-btn swap">
-							<input type="checkbox" />
-							<div class="swap-on"><i class="fa-solid fa-caret-right fa-lg fa-rotate-90"></i>&nbsp;Export Pallet</div>
-							<div class="swap-off"><i class="fa-solid fa-caret-right fa-lg"></i>&nbsp;Export Pallet</div>
-						</label>
-						<ul tabindex="0" class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-full mt-4">
-							<li>
-								<button class="btn btn-ghost w-full text-center" on:click={captureScreenshot}
-								>Image</button
-								></li>
-							<li>
-								<button class="btn btn-ghost w-full text-center" on:click={() => {utils.actuateModal('cm')}}
-								>JSON</button>
-							</li>
-						</ul>
-					</div>
-				</ul>
-			</div>
+	<div class="navbar bg-base-100 shadow-lg rounded-lg">
+		<div class="flex-1">
+			<a class="btn btn-ghost normal-case text-xl" href="/">Options <span class="badge rounded-lg ml-1">{$currentSelectionIdx + 1}</span></a>
+		</div>
+		<div class="flex-none">
+			<ul class="menu menu-horizontal px-1">
+				<div class="dropdown dropdown-end mb-2 sm:mb-0 sm:mr-2 w-full sm:w-auto">
+					<label tabindex="0" class="btn btn-ghost rounded-btn swap">
+						<input type="checkbox" />
+						<div class="swap-on"><i class="mr-1 fa-solid fa-caret-right text-xl fa-rotate-90"></i> Export Pallet</div>
+						<div class="swap-off"><i class="mr-1 fa-solid fa-caret-right text-xl fa-rotate-90"></i> Export Pallet</div>
+					</label>
+					<ul tabindex="0" class="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-full mt-4">
+						<li>
+							<button class="btn btn-ghost w-full text-center" on:click={captureScreenshot}
+							>Image</button
+							></li>
+						<li>
+							<button class="btn btn-ghost w-full text-center" on:click={() => {utils.actuateModal('cm')}}
+							>JSON</button>
+						</li>
+					</ul>
+				</div>
+			</ul>
 		</div>
 	</div>
 </div>
+
+
 
 <!-- Put this part before </body> tag -->
 <input type="checkbox" id="screenshotModal" class="modal-toggle" />

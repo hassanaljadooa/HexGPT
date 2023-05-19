@@ -1,5 +1,6 @@
 <script>
 	import QandA from '../QandA.svelte';
 </script>
-
-<QandA />
+<div class="flex items-center justify-center">
+    <QandA />
+</div>

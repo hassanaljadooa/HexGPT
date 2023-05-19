@@ -5,8 +5,11 @@
 </script>
 
 <svelte:head>
-	<title>HexGPT</title>
-	<meta name="description" content="Utilize the power of LLMs to create your next color pallet." />
+	<meta charset="UTF-8">
+	<meta name="description" content="HexGPT - AI-powered Color Palette Generator">
+	<meta name="keywords" content="HexGPT, color palette, AI, GPT-3.5-Turbo, design guidelines">
+	<meta name="robots" content="index, follow">
+	<title>HexGPT - AI-powered Color Palette Generator</title>
 </svelte:head>
 
 <div class="">
